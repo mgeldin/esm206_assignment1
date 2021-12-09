@@ -1,0 +1,59 @@
+---
+title: "Assignment 1 Task 3 Penguins"
+author: "Michelle Geldin"
+date: "10/9/2021"
+output: html_document
+---
+## Overview
+
+The ‘penguins.csv’ data contains body size measurements for three different species of penguins (Adélie, Chinstrap, and Gentoo) recorded by Gorman et al. on islands near Palmer Archipelago, Antarctica, from 2007 - 2009.
+
+### Data Citation
+
+Gorman KB, Williams TD, Fraser WR (2014). Ecological sexual dimorphism and environmental variability within a community of Antarctic penguins (genus Pygoscelis). PLoS ONE 9(3):e90081. https://doi.org/10.1371/journal.pone.0090081
+
+## Setup
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(janitor)
+```
+## Read in the Data
+
+```{r}
+penguin_data <- read_csv(here("data", "penguins.csv"))
+```
+## Data Visualization
+
+```{r}
+ggplot(data = penguin_data, aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(aes(color = species)) +
+  theme_minimal() +
+  labs(x = "Penguin Bill Depth (mm) Geldin", y = "Penguin Bill Length (mm) Geldin", title = "Penguin Bill Depth Compared to Penguin Bill Length")
+```
+
+```{r}
+ggplot(data = penguin_data, aes(x = flipper_length_mm, y = species)) +
+  geom_jitter(width = 0.2) +
+  theme_minimal() +
+  labs(x = "Penguin Flipper Length (mm) Geldin", y = "Penguin Species Geldin", title = "Penguin Flipper Length by Species Geldin")
+```
+## Data Wrangling
+
+```{r}
+gentoo_penguins <- penguin_data %>%
+  filter(species == "Gentoo")
+```
+
+## More Data Visualization
+
+```{r}
+ggplot(data = gentoo_penguins, aes(x = body_mass_g)) +
+  geom_histogram(color = "white", fill = "burlywood1") +
+  theme_minimal() + 
+  labs(x = "Gentoo Penguin Body Mass (g) Geldin", y = "Number of Gentoo Penguins", title = "Gentoo Penguins per Body Mass (g) Geldin")
+```
+
+## End Task
+

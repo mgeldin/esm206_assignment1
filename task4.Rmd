@@ -1,0 +1,47 @@
+---
+title: "Assignment 1 Task 4 Toolik Weather"
+author: "Michelle Geldin"
+date: "10/9/2021"
+output: html_document
+---
+## Overview
+
+The ‘toolik_daily_weather.csv’ data contains daily meteorological data (air temperature, windspeed, precipitation, etc.) recorded at Toolik Station, Alaska.
+
+### Data Citation
+
+Shaver, G. 2019. A multi-year DAILY weather file for the Toolik Field Station at Toolik Lake, AK starting 1988 to present. ver 4. Environmental Data Initiative. https://doi.org/10.6073/pasta/ce0f300cdf87ec002909012abefd9c5c
+
+## Setup
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+## Read in the Data
+
+```{r}
+toolik_weather <- read_csv(here("data", "toolik_daily_weather.csv"))
+```
+
+## Data Wrangling
+
+```{r}
+toolik_weather_clean <- toolik_weather %>%
+  clean_names() %>%
+  select(year, date, daily_air_temp_mean_c, daily_air_temp_abs_max_c, daily_air_temp_abs_min_c) %>%
+  filter(year >= 2010)
+```
+
+## Data Visualization
+
+```{r}
+ggplot(data = toolik_weather_clean, aes(x = date, y = daily_air_temp_mean_c)) +
+  geom_line() +
+  theme_bw() +
+  labs(x = "Date Geldin", y = "Daily Air Temperature (Celsius) Geldin", title = "Daily Air Temperature (Celsius) by Date Geldin")
+```
+
+## End Task

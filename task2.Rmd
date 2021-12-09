@@ -1,0 +1,44 @@
+---
+title: "Assignment 1 Task 2 - Bison Weights"
+author: "Michelle Geldin"
+date: "10/9/2021"
+output: html_document
+---
+## Overview
+
+This code wrangles and visualizes historical bison weight information for individual animals (knz_bison_weight.csv) from the Konza Prairie Bioloical Station (https://kpbs.konza.k-state.edu/)
+
+### Data Citation
+Blair, J. 2021. CBH01 Konza Prairie bison herd information ver 12. Environmental Data Initiative. https://doi.org/10.6073/pasta/9c641b35695abc5889edd64c3950517f
+
+## Setup
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+## Read in the Data
+
+```{r}
+bison_weight <-read_csv(here("data", "knz_bison_weight.csv"))
+```
+## Data Wrangling
+
+```{r}
+bison_weight_clean <- bison_weight %>% 
+  clean_names() %>%
+  mutate(animal_age = rec_year - animal_yob)
+```
+
+## Data Visualization
+
+```{r}
+ggplot(data = bison_weight_clean, aes(x = animal_age, y = animal_weight)) + 
+  geom_point(aes(color = animal_sex)) +
+  theme_minimal() +
+  labs(x = "Bison Age Geldin", y = "Bison Weight Geldin", title = "Bison Weight Compared to Bison Age Geldin")
+```
+
+## End Task

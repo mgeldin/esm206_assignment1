@@ -1,0 +1,47 @@
+---
+title: "Task 1 - Global sea level rise due to glacial melt"
+author: "Michelle Geldin"
+date: "10/6/2021"
+output: html_document
+---
+## Overview
+This code wrangles and visualizes global glacial volume loss from 1961 - 2003 using curated data (glacial_loss.csv) from the National Snow and Ice Center (http://nsidc.org/data/g10002.html)
+
+### Data Citation
+Dyurgerov, M. Edited by M. Meier and R. Armstrong. 2002, updated 2005. Glacier Mass Balance and Regime Measurements and Analysis, 1945-2003, Version 1. Boulder, Colorado USA. NSIDC: National Snow and Ice Data Center. doi: https://doi.org/10.7265/N52N506F.
+
+
+## Setup
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+library(janitor)
+library(ggplot2)
+```
+
+## Read in the Data
+
+```{r}
+glacial_loss <- read_csv(here("data_task_1", "glacial_loss.csv")) %>%
+  clean_names()
+```
+## Data Wrangling
+
+```{r}
+glacial_data <- glacial_loss %>%
+  select(year, cumulative_sea_level_rise)
+```
+
+## Data Visualization
+
+```{r}
+ggplot(data = glacial_data, aes(x = year, y = cumulative_sea_level_rise)) +
+  geom_jitter()
+  theme_dark()
+  labs(x = "year geldin",
+       y = "cumulative sea level rise geldin",
+       title = "cumulative sea level rise per year geldin")
+```
+## End Task
